@@ -2,7 +2,7 @@ import { useContext,createContext, useEffect } from "react";
 import { useState } from "react";
 export const StoreContext=createContext();
 export const StoreContextProvider=({children})=>{
-    const url="https://backend-silk-iota-33.vercel.app/";
+    const url="https://backend-silk-iota-33.vercel.app";
 const [AdminLoginOpen, setAdminLoginOpen] = useState(false)
 const [AdminSignupOpen, setAdminSignupOpen] = useState(false)
 const [InterneeLoginOpen, setInterneeLoginOpen] = useState(false)
