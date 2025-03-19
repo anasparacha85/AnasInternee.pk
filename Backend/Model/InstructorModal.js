@@ -1,0 +1,36 @@
+const mongoose=require('mongoose')
+const InstructorSchema=new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true
+    },
+    address:{
+        type: String
+    },
+    phone: {
+        type: String,
+        required: true,
+        unique: true,
+        match: [/^\+?[0-9]{10,15}$/, "Invalid phone number format"], // ✅ Regex validation
+      },
+      message:{
+        type :String
+      },
+      document:{
+        type:String
+
+      },
+      status:{
+        type:String,
+          enum:['active','pending'],
+        default:'pending'
+      },
+   
+})
+
+const InstructorModal=new mongoose.model('Instructor',InstructorSchema)
+module.exports=InstructorModal

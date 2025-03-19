@@ -1,0 +1,21 @@
+const express=require('express')
+const router=express.Router()
+const passport=require('passport')
+const CourseController=require('../Controller/CourseController')
+const InstructorMiddleware=require('../Middleware/InstructorMiddleware')
+router.route('/uploadCourses').post(passport.authenticate('jwt',{session:false}),InstructorMiddleware,CourseController.uploadCourses)
+router.route('/getAllCourses').get(CourseController.getAllCourses)
+router.route('/course/:id').get(CourseController.getcoursebyid)
+router.route('/addlesson/:id').post(passport.authenticate('jwt',{session:false}),InstructorMiddleware,CourseController.addlessonsbycourseid)
+router.route('/course/enroll/:id').post(passport.authenticate('jwt',{session:false}),CourseController.enrolledStudent)
+router.route('/course/student/getCourses').get(passport.authenticate('jwt',{session:false}),CourseController.getEnrolledCourses)
+router.route('/CourseContent').get(CourseController.CoursesCount)
+router.route('/CourseNameCount').get(CourseController.CourseCountbbyName)
+router.route('/CourseCategoryCount').get(CourseController.CourseCountbbyCategory)
+router.route('/DeleteCourse/:id').delete(passport.authenticate('jwt',{session:false}),InstructorMiddleware,(CourseController.DeleteCourses))
+router.route('/addFavorites/:id').post(passport.authenticate('jwt',{session:false}),CourseController.AddFavourites)
+router.route('/removeFavorites/:id').delete(passport.authenticate('jwt',{session:false}),CourseController.RemoveFavourites)
+router.route('/getFavorites').get(passport.authenticate('jwt',{session:false}),CourseController.getAllFavourites)
+
+
+module.exports=router

@@ -1,0 +1,12 @@
+const express=require("express")
+const Router=express.Router()
+const AdminController=require('../Controller/AdminController')
+const passport=require('passport')
+const RoleAccess=require('../Middleware/RoleMiddleware')
+Router.route('/ViewJobApplications').get(passport.authenticate('jwt',{session:false}),RoleAccess('Admin'),AdminController.ViewJobApplications)
+Router.route('/delete-a-job/:id').delete(passport.authenticate('jwt',{session:false}),RoleAccess('Admin'),AdminController.deletejob)
+Router.route('/AppliedInstructors').get(passport.authenticate('jwt',{session:false}),RoleAccess('Admin'),AdminController.AppliedInstructors)
+Router.route('/getallJobs').get(passport.authenticate('jwt',{session:false}),RoleAccess('Admin'),AdminController.alljobs)
+Router.route('/makeInstructor/:email').patch(passport.authenticate('jwt',{session:false}),RoleAccess('Admin'),AdminController.makeInstructor)
+Router.route('/removeInstructor/:email').patch(passport.authenticate('jwt',{session:false}),RoleAccess('Admin'),AdminController.removeinstructor)
+module.exports=Router
