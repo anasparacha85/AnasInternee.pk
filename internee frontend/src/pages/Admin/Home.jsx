@@ -7,6 +7,7 @@ import Jobscard from '../../Components/Cardss/Jobscard';
 import JobPostButton from '../../Components/JobPostButton';
 import BlogsCart from '../../Components/Cardss/BlogsCart';
 import Subscribe from '../../Components/Subscribe';
+import CountUp from '../../Animations/countup';
 const Home = () => {
   return (
      <div className=" flex flex-col bg-White ">
