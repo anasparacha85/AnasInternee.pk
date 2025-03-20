@@ -56,7 +56,7 @@ passport.use(
 passport.use(new googleStrategy(
     {  clientID:process.env.GOOGLE_CLIENT_ID,
         clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-       callbackURL: "/Api/Auth/google/callback"
+       callbackURL: "https://backend-silk-iota-33.vercel.app/Api/Auth/google/callback"
     },
     async (accessToken,refreshToken,profile,done) => {
         try{
