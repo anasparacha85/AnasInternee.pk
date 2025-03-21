@@ -13,10 +13,10 @@ const DreamSection = () => {
   
           {/* Icons Row */}
           <div className="flex justify-center md:justify-start gap-4 mt-6">
-            <img src="https://www.internee.pk/assets/pitb-BxRSQRWU.png" alt="Icon 1" className="w-20 h-20" />
-            <img src="https://www.internee.pk/assets/nic-DRZpfK9-.png" alt="Icon 2" className="w-20 h-20" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyqqLRSvpAgayKQyuHHHRStZsqqi6fmJd10g&s"  alt="Icon 1" className="w-20 h-20" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOAAEbFND8Ha4slh14wcCd3SUtj_HLJ1UexQ&s" alt="Icon 2" className="w-20 h-20" />
             <img src="https://www.internee.pk/images/see.png" alt="Icon 3" className="w-20 h-20" />
-            <img src="https://www.internee.pk/assets/cloud-t-bq6Ebb.png" alt="Icon 4" className="w-20 h-20" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjVxwEB1H91qJyoHeep3m7Z_NIoc8VAdzMQA&s" alt="Icon 4" className="w-20 h-20" />
           </div>
   
           {/* Buttons */}

@@ -44,17 +44,18 @@ export const MyFavorites = () => {
     <>
 <LMSHeader/>
 <ProfileHeader Heading={"/LMS/courses/myFavourites"}/>
-      {courses?
+      {courses.length>0?
       
       <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold mb-6">All Courses</h1>
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {courses.map((course, index) => (
-         <CourseCard rout={`/LMS/course/${course.course._id}`} Label="Enroll Now" key={index} id={course.course._id} title={course.course.CourseName} image={course.course.CoursePic} description={course.course.CourseDescription} price={course.course.CoursePrice} />
+         <CourseCard rout={`/LMS/course/${course.course._id}`}  Label="Enroll Now" key={index} id={course.course._id} title={course.course.CourseName} image={course.course.CoursePic} description={course.course.CourseDescription} price={course.course.CoursePrice} />
         ))}
       </div>
       </div>:
-      <div className='mx-auto'><h1 className='text-green-600 text-xl '>No Course Added To Favorites</h1> </div>}
+      <div className='mx-auto py-4 px-2
+       '><h1 className='text-green-600 text-xl  '>No Course Added To Favorites</h1> </div>}
     
    
     </>

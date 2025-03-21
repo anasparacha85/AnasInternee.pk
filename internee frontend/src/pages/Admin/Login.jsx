@@ -5,6 +5,7 @@ import 'aos/dist/aos.css'
 import BaseInput from '../../Components/Inputs/BaseInput'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import ForgetPasswordModal from '../../Modals/ForgetPasswordModal'
 
 
 const Login = () => {
@@ -12,10 +13,11 @@ const Login = () => {
     Aos.init()
    },[])
   const [user, setuser] = useState({email:"",password:""})
-  const {url,AdminLoginOpen,setAdminLoginOpen,AdminSignupOpen,setAdminSignupOpen,InterneeLoginOpen,setInterneeLoginOpen,InterneeSignupOpen,setInterneeSignupOpen,SaveTokenToLs,SaveAdminKeyToLs,SuccessMessage,setSuccessMessage}=usestore()
+  const {url,AdminLoginOpen,setAdminLoginOpen,AdminSignupOpen,setAdminSignupOpen,InterneeLoginOpen,setInterneeLoginOpen,InterneeSignupOpen,setInterneeSignupOpen,SaveTokenToLs,SaveAdminKeyToLs,SuccessMessage,setSuccessMessage,forgetpasswordmodalopen,setforgetpasswordmodalopen}=usestore()
   const [FailureMessage, setFailureMessage] = useState(null)
  
   
+
  const onchange=(e)=>{
 const {name,value}=e.target;
 setuser({...user,[name]:value})
@@ -45,9 +47,7 @@ setuser({...user,[name]:value})
       toast.success(data.SuccessMessage)
       setSuccessMessage(data.SuccessMessage)
       setAdminLoginOpen(false)
-      setTimeout(() => {
-        window.location.reload()
-      }, 4000);
+      
      
 
     }
@@ -84,7 +84,7 @@ setuser({...user,[name]:value})
      data-aos-easing="linear"
      data-aos-duration="500" className="bg-white rounded-lg w-[400px] py-6 px-4 relative mt-10">
         <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          className="absolute cursor-pointer top-2 right-2 text-gray-500 hover:text-gray-800"
           onClick={closeModal}
         >
           ✕
@@ -120,8 +120,18 @@ setuser({...user,[name]:value})
                 Login
               </button>
             </form>
+            <ForgetPasswordModal  />
+<div className='flex flex-col text-center'>
 
-            <div className="mt-4 text-center">
+<p className="text-sm mt-4">
+  <button
+    className="text-green-600 cursor-pointer"
+    onClick={() => setforgetpasswordmodalopen(true)}
+  >
+    Forgot Password?
+  </button>
+</p>
+            <div className="mt-4 ">
               <p className="text-sm">
                 Don't have an account?{" "}
                 <button  className="text-green-500 cursor-pointer" onClick={() => {setAdminLoginOpen(false); setAdminSignupOpen(true)}}>
@@ -131,6 +141,8 @@ setuser({...user,[name]:value})
             </div>
 
            
+</div>
+
           </div>
         </div>
       

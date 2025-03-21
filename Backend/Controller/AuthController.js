@@ -1,6 +1,9 @@
 const User=require('../Model/UserModal')
 require('dotenv').config()
+const jwt=require('jsonwebtoken')
 const passport=require('passport')
+const transporter=require('../Middleware/transporter')
+const bcrypt=require('bcrypt')
 const UserRegister=async (req,res)=>{
     try{
     const {name,email,password,ConfirmPassword}=req.body;
@@ -76,91 +79,120 @@ const GoogleLogin=async(req,res)=>{
     
 }
 
-
-const sendoptp = async (req, res) => {
+const ForgetPassword=async(req,res)=>{
     try {
         const otp = Math.floor(10000 + Math.random() * 90000); // Generate OTP
         console.log('Generated OTP:', otp);
 
-        const { email } = req.body;
-        const user = await User.findOne({ email });
+       console.log(req.body.email);
+       const {email}=req.body;
+       const user=await User.findOne({email})
+       if(!user){
+        return res.status(400).json({FailureMessage:"Email not Registered"})
+       }
+       const token=jwt.sign({id:user._id,email:user.email,otp:user.otp},process.env.OTP_TOKEN,{expiresIn:'15m'})
+       const info = await transporter.sendMail({
+        from: '"AnasInternee.pk" <amiranas761@gmail.com>', // Sender info
+        to: email,                                    // Recipient email
+        subject: 'Password Reset Code',
+        text: `Your OTP is: ${otp}`,
+        html: `<p>Hi ${user.name},</p><p>Your OTP for password reset is: <strong>${otp}</strong></p>`,
+    });
 
-        if (!user) {
-            return res.status(404).json({ msg: 'User not found' });
-        }
-
-        // Generate a temporary token valid for OTP verification
-        const token = jwt.sign({ id: user._id, email: user.email,otp:optp }, "TEMP_SECRET", { expiresIn: "15m" });
-
-        // Send email
-        const info = await transporter.sendMail({
-            from: '"NodeMailer" <amiranas761@gmail.com>', // Sender info
-            to: email,                                    // Recipient email
-            subject: 'Password Reset Code',
-            text: `Your OTP is: ${otp}`,
-            html: `<p>Hi ${user.name},</p><p>Your OTP for password reset is: <strong>${otp}</strong></p>`,
-        });
-
-        console.log('Email sent:', info.messageId);
-
-        if (info.messageId) {
-            // Save OTP in the database
-            await User.updateOne({ email }, { $set: { otp } });
-
-            // Send response with token
-            res.status(200).json({
-                message: 'Password reset email sent',
-                token, // Include token in response
-            });
-        }
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: 'Error occurred', error });
+    console.log('Email sent:', info.messageId);
+    if(info.messageId){
+        const updatedUser = await User.findOneAndUpdate(
+            { email: user.email },
+            { $set: { otp: otp } },
+            { new: true }
+        );
+        let findupd=await User.findOne({email:user.email})
+        console.log(findupd);
+        
+        res.status(200).json({SuccessMessage:"Password Reset Email sent",token})
     }
-};
+       
+    } catch (error) {
+        console.log(error);
+        
+        res.status(500).json({FailureMessage:"Internal server error"})
+        
+    }
+}
 
-const verifyotp = async (req, res) => {
+const VerifyOtp=async(req,res)=>{
     try {
         const { otp } = req.body;
+        console.log(otp);
+        
         const decodedtoken = req.token;
-
-        // Validate OTP
-        const user = await register.findOne({ email: decodedtoken.email, optp: parseInt(otp) });
+        console.log(decodedtoken.email);
+        
+        console.log();
+        
+        const user=await User.findOne({ email: decodedtoken.email ,otp:parseInt(otp)});
+      console.log(user);
+      
+        
         if (!user) {
-            return res.status(404).json({ msg: "Invalid OTP" });
+            return res.status(404).json({ FailureMessage: "Invalid OTP" });
         }
-
-        // Clear OTP after successful verification
-        await register.updateOne({ email: decodedtoken.email }, { $unset: { optp: "" } });
-
-        res.status(200).json({ msg: "OTP matched" });
-    } catch (error) {
-        res.status(500).json({ msg: "Error verifying OTP", error });
+        //  Clear OTP after successful verification
+         await User.updateOne({ email: decodedtoken.email }, { $unset: { otp: "" } });
+         let upd=await User.findOne({ email: user.email });
+         console.log(upd);
+         
+         
+        
+          res.status(200).json({ SuccessMessage: "otp Matched" });
+        
+          
+     } 
+    catch (error) {
+        console.log(error);
+        
+        res.status(500).json({FailureMessage:"Internal Server Error"})
+        
     }
-};
+}
 
-const updatepassword = async (req, res) => {
+
+const UpdatePassword = async (req, res) => {
     try {
-        const { password } = req.body;
-        const decodedtoken = req.token;
+        const { newPassword, confirmNewPassword } = req.body;
 
-        // Ensure OTP is cleared before updating password
-        const user = await User.findOne({ email: decodedtoken.email });
-        if (!user || user.optp) {
-            return res.status(401).json({ msg: "OTP verification required before resetting password" });
+        if (newPassword !== confirmNewPassword) {
+            return res.status(400).json({ FailureMessage: "Passwords not matched" });
         }
 
-        // Hash the password
-        const hashedPassword = await bcrypt.hash(password, 10);
+        const decodedtoken = req.token;
+        const user = await User.findOne({ email: decodedtoken.email });
 
-        // Update password
-        await User.updateOne({ email: decodedtoken.email }, { $set: { password: hashedPassword } });
+        if (!user || (user.otp && user.otp !== "")) {
+            return res.status(401).json({ FailureMessage: "Invalid user or OTP!" });
+        }
 
-        res.status(200).json({ msg: "Password has been updated successfully" });
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+        const updatedUser = await User.updateOne(
+            { email: decodedtoken.email },
+            { $set: { password: hashedPassword } }
+        );
+
+        if (updatedUser.modifiedCount === 0) {
+            return res.status(400).json({ FailureMessage: "Password not changed" });
+        }
+
+        res.status(200).json({ SuccessMessage: "Password Updated Successfully" });
     } catch (error) {
-        res.status(500).json({ msg: "Error updating password", error });
+        console.log(error);
+        res.status(500).json({ FailureMessage: "Internal Server Error" });
     }
 };
 
+module.exports = UpdatePassword;
 
-module.exports={UserRegister,AdminRegister,Login,GoogleLogin}
+
+
+module.exports={UserRegister,AdminRegister,Login,GoogleLogin,ForgetPassword,VerifyOtp,UpdatePassword}

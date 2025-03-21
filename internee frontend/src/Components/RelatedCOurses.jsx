@@ -12,7 +12,7 @@ const RelatedCourses = ({courses}) => {
       </h2>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {courses.map((course, index) => (
-         <CourseCard key={index} id={course._id} title={course.CourseName} image={course.CoursePic} description={course.CourseDescription} price={course.CoursePrice} onEnrolled={()=>navigate(`/LMS/course/${course._id}`)}/>
+         <CourseCard key={index} id={course._id} Label={"Enroll Now"} title={course.CourseName} image={course.CoursePic} description={course.CourseDescription} price={course.CoursePrice}  rout={`/LMS/course/${course._id}`}/>
         ))}
       </div>
     </div>

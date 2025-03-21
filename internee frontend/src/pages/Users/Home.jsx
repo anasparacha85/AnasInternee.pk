@@ -39,7 +39,7 @@ export const UserHome = () => {
       
       <div className='w-[100%] flex flex-col justify-center mt-10 mb-20'>
         <div className='w-full flex justify-center mb-6'>
-        <img src="https://www.internee.pk/assets/icon-BT8woF2N.jpg" alt="Icon 1" className=" w-20" />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8GQ1LVkaqnY-gzh-dECm3OBMbGX8l74Dfgg&s" alt="Icon 1" className=" w-20" />
         </div>
         <div className='w-full flex justify-center mb-6'>
         <h1 className='font-bold text-5xl text-gray-900 text-center'>What is internee.pk?</h1>

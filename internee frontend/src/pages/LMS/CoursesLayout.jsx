@@ -93,31 +93,39 @@ useEffect(()=>{
         </div>
       </aside>
 
-      {/* Courses */}
       <main className="flex-1 grid gap-4 p-4 w-full md:w-3/5">
-        {courses.length>0?courses.map((course) => (
-          <Link to={`/LMS/course/${course._id}`}>
-          <div key={course._id} className="bg-white p-4  rounded-lg shadow-lg flex w-5/6">
-            <img
-              src={course.CoursePic}
-              alt={course.CourseName}
-              className="w-32 h-32 object-cover rounded-lg"
-            />
-            <div className="ml-4 flex flex-col justify-between">
-              <h3 className="text-green-700 font-bold text-lg">{course.CourseName}</h3>
-              <p className="text-gray-600 text-sm">{course.CourseDescription}</p>
-              <div className="text-sm text-gray-500 flex gap-2">
-                <span>{course.lessonCount} Lessons</span>
-                <span>{ "03:05:26 Hours"}</span>
-                <span>{"Beginner"}</span>
-              </div>
-              <div className="text-green-600 font-bold">{course.CoursePrice==0&&"free"}</div>
-            </div>
-          </div>
-          </Link>
-        )):<div className="text-xl text-green-600 flex justify-start"> No Courses Found</div>}
+  {courses.length > 0 ? courses.map((course) => (
+    <Link key={course._id} to={`/LMS/course/${course._id}`} className="w-full">
+      <div className="bg-white p-4 rounded-lg shadow-lg flex flex-col md:flex-row w-full md:w-5/6">
+        {/* Image */}
+        <img
+          src={course.CoursePic}
+          alt={course.CourseName}
+          className="w-full md:w-32 h-40 md:h-32 object-cover rounded-lg"
+        />
         
-      </main>
+        {/* Content */}
+        <div className="mt-3 md:mt-0 md:ml-4 flex flex-col justify-between">
+          <h3 className="text-green-700 font-bold text-lg">{course.CourseName}</h3>
+          <p className="text-gray-600 text-sm">{course.CourseDescription}</p>
+          
+          <div className="text-sm text-gray-500 flex gap-2 flex-wrap">
+            <span>{course.lessonCount} Lessons</span>
+            <span>03:05:26 Hours</span>
+            <span>Beginner</span>
+          </div>
+          
+          <div className="text-green-600 font-bold">
+            {course.CoursePrice == 0 && "Free"}
+          </div>
+        </div>
+      </div>
+    </Link>
+  )) : (
+    <div className="text-xl text-green-600 flex justify-start">No Courses Found</div>
+  )}
+</main>
+
     </div>
     </div>
   );

@@ -9,7 +9,7 @@ const InstructorHeader = () => {
       <div className="container mx-auto px-4 py-3 flex flex-col md:flex-row justify-between items-center">
         {/* Logo Section */}
         <div className="  text-xl">
-         <img src="https://www.internee.pk/assets/logo-DKUUqbKl.png" alt="" className='w-40' />
+         <img src="https://www.internee.pk/logo.png" alt="" className='w-40' />
         </div>
 
 

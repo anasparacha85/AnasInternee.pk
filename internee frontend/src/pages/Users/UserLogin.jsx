@@ -6,6 +6,7 @@ import BaseInput from '../../Components/Inputs/BaseInput'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 import { ClipLoader } from 'react-spinners'
+import ForgetPasswordModal from '../../Modals/ForgetPasswordModal'
 
 
 const UserLogin = () => {
@@ -13,9 +14,9 @@ const UserLogin = () => {
     Aos.init()
    },[])
   const [user, setuser] = useState({email:"",password:""})
-  const {url,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen,SaveTokenToLs,SaveAdminKeyToLs,SuccessMessage,setSuccessMessage,isLoading,setisLoading}=usestore()
+  const {url,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen,SaveTokenToLs,SaveAdminKeyToLs,SuccessMessage,setSuccessMessage,isLoading,setisLoading,forgetpasswordmodalopen,setforgetpasswordmodalopen}=usestore()
   const [FailureMessage, setFailureMessage] = useState(null)
-
+ 
  const onchange=(e)=>{
 const {name,value}=e.target;
 setuser({...user,[name]:value})
@@ -49,10 +50,8 @@ setuser({...user,[name]:value})
       setSuccessMessage(data.SuccessMessage)
       toast.success(data.SuccessMessage)
       setuser({email:"",password:""})
+      setUserLoginOpen(false)
      
-      setTimeout(() => {
-        window.location.reload()
-      }, 2000);
      
 
     }
@@ -90,7 +89,7 @@ setuser({...user,[name]:value})
      data-aos-easing="linear"
      data-aos-duration="500" className="bg-white rounded-lg w-[400px] py-6 px-4 relative mt-10">
         <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-800"
           onClick={closeModal}
         >
           ✕
@@ -131,11 +130,24 @@ setuser({...user,[name]:value})
             <button
   type="button"
   onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}
-  className="w-full flex items-center justify-center gap-2 bg-green-700 text-white py-3 rounded-md hover:bg-green-600 transition mt-3"
+  className="w-full cursor-pointer
+   flex items-center justify-center gap-2 bg-green-700 text-white py-3 rounded-md hover:bg-green-600 transition mt-3"
 >
   <img width="48" height="48" src="https://img.icons8.com/fluency/48/google-logo.png" alt="google-logo"/>
   SignIn with Google
 </button>
+<ForgetPasswordModal  />
+<div className='flex flex-col text-center'>
+
+<p className="text-sm mt-4">
+  <button
+    className="text-green-600 cursor-pointer"
+    onClick={() => setforgetpasswordmodalopen(true)}
+  >
+    Forgot Password?
+  </button>
+</p>
+</div>
             <div className="mt-4 text-center">
               <p className="text-sm">
                 Don't have an account?{" "}

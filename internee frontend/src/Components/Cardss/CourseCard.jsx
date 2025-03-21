@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 const CourseCard = ({ image, title, description, price, id, rout, Label }) => {
-  const { url, jwtToken } = usestore();
+  const { url, jwtToken,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen } = usestore();
   const [isFavorite, setIsFavorite] = useState(false);
 
   // ✅ Page load hone par localStorage se favorite status fetch karo
@@ -16,6 +16,11 @@ const CourseCard = ({ image, title, description, price, id, rout, Label }) => {
 
   // ✅ Favorite toggle function
   const toggleFavourite = () => {
+    if(!jwtToken){
+      setUserLoginOpen(true)
+      return;
+      
+    }
     let apiurl = "";
     let options = {
       headers: {

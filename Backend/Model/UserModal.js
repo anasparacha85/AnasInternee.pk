@@ -70,7 +70,8 @@ const UserSchema = new mongoose.Schema({
         type:String,
         enum:['active','pending'],
         default:'pending'
-    }
+    },
+   
 });
 
 // Hashing password before saving

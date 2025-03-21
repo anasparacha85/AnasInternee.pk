@@ -76,7 +76,7 @@ return response.json()
      data-aos-easing="linear"
      data-aos-duration="500" className="bg-white rounded-lg w-[500px] py-6 px-4 relative mt-5">
         <button
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-800"
+          className="absolute top-2 right-2 cursor-pointer text-gray-500 hover:text-gray-800"
           onClick={closeModal}
         >
           ✕
@@ -131,7 +131,8 @@ return response.json()
             <button
   type="button"
   onClick={() => window.location.href = "http://localhost:5000/api/auth/google"}
-  className="w-full flex items-center justify-center gap-2 bg-green-700 text-white py-3 rounded-md hover:bg-green-600 transition mt-3"
+  className="w-full flex cursor-pointer
+   items-center justify-center gap-2 bg-green-700 text-white py-3 rounded-md hover:bg-green-600 transition mt-3"
 >
   <img width="48" height="48" src="https://img.icons8.com/fluency/48/google-logo.png" alt="google-logo"/>
   SignUp with Google

@@ -6,16 +6,19 @@ import RelatedCourses from "../../Components/RelatedCOurses";
 import { toast } from "react-toastify";
 import VideoOverLay from "../../Components/OverLays/VideoOverLay";
 import LMSHeader from "../../Components/LMSHeader";
+import { ClipLoader } from "react-spinners";
 
 export const CourseDetail = () => {
   const { id } = useParams(); // Get course ID from URL params
   const [course, setCourse] = useState(null); // Default to null for loading state
-  const { url ,jwtToken} = usestore(); // Get base URL
+  const { url ,jwtToken,isLoggedIn,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen,isLoading,setisLoading} = usestore(); // Get base URL
   const [relatedCourses, setrelatedCourses] = useState([])
   const [videourl, setvideourl] = useState('')
   const [videopopupopen, setvideopopupopen] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(false);
 
   const getCourseById = () => {
+    
     fetch(`${url}/api/courses/course/${id}`)
       .then((res) => res.json())
       .then((data) => {
@@ -39,7 +42,16 @@ export const CourseDetail = () => {
   useEffect(() => {
     getCourseById();
   }, [id]);
+  useEffect(()=>{
+    console.log(relatedCourses);
+    
+  },[getCourseById])
   const getenrolled=()=>{
+  if(!jwtToken){
+    setUserLoginOpen(true)
+    return;
+  }
+  setisLoading(true)
     fetch(`${url}/api/courses/course/enroll/${id}`,{
       method:'POST',
       headers:{
@@ -61,8 +73,87 @@ export const CourseDetail = () => {
       console.log(error);
       toast.error(error.FailureMessage)
       
+    }).finally(()=>{
+      setisLoading(false)
     })
   }
+
+  const AddtoFavorite=()=>{
+    if(!jwtToken){
+      setUserLoginOpen(true)
+      return;
+      
+    }
+    let apiurl = "";
+    let options = {
+      method : "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    };
+    apiurl = `${url}/api/courses/addFavorites/${id}`;
+   
+    fetch(apiurl, options)
+    .then(response => response.json())
+    .then(data => {
+      if (data.SuccessMessage) {
+        toast.success(data.SuccessMessage);
+        setIsFavorite(true);
+
+        // ✅ Local storage update karo
+        let storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (!isFavorite) {
+          storedFavorites.push(id);
+        } else {
+          storedFavorites = storedFavorites.filter(courseId => courseId !== id);
+        }
+        localStorage.setItem("favorites", JSON.stringify(storedFavorites));
+      } else if (data.FailureMessage) {
+        toast.error(data.FailureMessage);
+      }
+    })
+    .catch(error => console.log("Error:", error))
+  
+};
+
+      
+  
+const RemoveFromFavorite=()=>{
+  let apiurl = "";
+    let options = {
+      method : "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${jwtToken}`
+      }
+    };
+    apiurl = `${url}/api/courses/removeFavorites/${id}`;
+   
+    fetch(apiurl, options)
+    .then(response => response.json())
+    .then(data => {
+      if (data.SuccessMessage) {
+        toast.success(data.SuccessMessage);
+        setIsFavorite(false);
+
+        // ✅ Local storage update karo
+        let storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+        if (!isFavorite) {
+          storedFavorites.push(id);
+        } else {
+          storedFavorites = storedFavorites.filter(courseId => courseId !== id);
+        }
+        localStorage.setItem("favorites", JSON.stringify(storedFavorites));
+      } else if (data.FailureMessage) {
+        toast.error(data.FailureMessage);
+      }
+    })
+    .catch(error => console.log("Error:", error))
+};
+
+      
+
 
 
 
@@ -115,11 +206,18 @@ export const CourseDetail = () => {
       {/* Free Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">Free</h3>
       <div className="flex flex-col gap-3 sm:space-x-4 space-y-4 sm:space-y-0">
-        <button className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-          Add to Favorites
-        </button>
+        {isFavorite?
+          <button onClick={RemoveFromFavorite} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+         Remove From Favorite
+        </button> :
+       <button onClick={AddtoFavorite} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+    Add to Favorite
+     </button>
+     
+      }
+       
         <button onClick={getenrolled} className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300">
-          Get enrolled
+        {isLoading?<ClipLoader size={25} color="white" loading={isLoading}/>:"Get Enrolled"}   
         </button>
       </div>
       <p className="mt-4 text-green-600">Includes:</p>

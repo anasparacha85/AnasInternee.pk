@@ -26,7 +26,7 @@ else{
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="  text-xl">
-         <img src="https://www.internee.pk/assets/logo-DKUUqbKl.png" alt="" className='w-40' />
+         <img src="https://www.internee.pk/logo.png" alt="" className='w-40' />
         </div>
 
         {/* Desktop Navigation Links */}
