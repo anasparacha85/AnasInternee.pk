@@ -54,31 +54,30 @@ passport.use(
 
 
 passport.use(new googleStrategy(
-    {  clientID:process.env.GOOGLE_CLIENT_ID,
-        clientSecret:process.env.GOOGLE_CLIENT_SECRET,
-       callbackURL: "https://backend-silk-iota-33.vercel.app/Api/Auth/google/callback"
+    {  
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: process.env.GOOGLE_CALLBACK_URL, // ✅ Use environment variable
     },
-    async (accessToken,refreshToken,profile,done) => {
-        try{
-            let user=await User.findOne({googleId:profile.id})
-            if(!user){
-                user= await User.create({
-                    googleId:profile.id,
-                    name:profile.displayName,
-                    email:profile.emails[0].value,
-                    profilePicture:profile.photos[0].value,
-                    role:'User'
-                })
+    async (accessToken, refreshToken, profile, done) => {
+        try {
+            let user = await User.findOne({ googleId: profile.id });
+            if (!user) {
+                user = await User.create({
+                    googleId: profile.id,
+                    name: profile.displayName,
+                    email: profile.emails[0].value,
+                    profilePicture: profile.photos[0].value,
+                    role: 'User'
+                });
             }
-            return done(null,user)
+            return done(null, user);
+        } catch (error) {
+            return done(error, false);
         }
-        catch(error){
-            return done(error,false)
-        }
-        
     }
-  
-))
+));
+
 passport.serializeUser((user,done)=>{
     done(null,user.id);
 })
