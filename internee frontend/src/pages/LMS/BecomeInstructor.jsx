@@ -15,13 +15,14 @@ export const BecomeInstructorForm = () => {
   const pendref = useRef();
   const { user, url, jwtToken, Instructors, setInstructors } = usestore();
 console.log(user);
+console.log(Instructors);
 
   useEffect(() => {
-    if (user.InstructorStatus === "pending" && formref.current && pendref.current) {
+    if (Instructors.length>0 && user.InstructorStatus === "pending" && formref.current && pendref.current) {
       formref.current.classList.add("hidden");
       pendref.current.classList.remove("hidden");
     }
-  }, [user.InstructorStatus]);
+  }, [user.InstructorStatus,Instructors]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

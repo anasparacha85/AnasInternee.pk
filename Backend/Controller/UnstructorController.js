@@ -10,7 +10,7 @@ const BecomeInsrtuctor=async(req,res)=>{
        if(finddata){
         return res.status(200).json({FailureMessage:"You have Already Applied to become a instructor"})
        }
-       const savedata=await Instructor.create({name,email,address,phone,message,document:req.file.path})
+       const savedata=await Instructor.create({name,email,address,phone,message,document:req.file.path,status:'pending'})
 
        const userdata=await User.updateOne({email:savedata.email},{$set:{InstructorStatus:"pending"}})
        res.status(200).json({SuccessMessage:"Application Delivered SuccessFully"})
