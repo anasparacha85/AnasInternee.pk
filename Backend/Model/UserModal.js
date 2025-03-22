@@ -68,8 +68,8 @@ const UserSchema = new mongoose.Schema({
     },
     InstructorStatus:{
         type:String,
-        enum:['active','pending'],
-        default:'pending'
+        enum:['','active','pending'],
+        default:''
     },
    
 });
