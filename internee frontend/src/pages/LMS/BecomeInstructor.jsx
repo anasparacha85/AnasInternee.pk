@@ -14,6 +14,7 @@ export const BecomeInstructorForm = () => {
   const formref = useRef();
   const pendref = useRef();
   const { user, url, jwtToken, Instructors, setInstructors } = usestore();
+console.log(user);
 
   useEffect(() => {
     if (user.InstructorStatus === "pending" && formref.current && pendref.current) {
