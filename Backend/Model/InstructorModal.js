@@ -26,8 +26,8 @@ const InstructorSchema=new mongoose.Schema({
       },
       status:{
         type:String,
-          enum:['none','active','pending'],
-        default:'none'
+        enum:['none','active','pending']
+       
       },
    
 })
