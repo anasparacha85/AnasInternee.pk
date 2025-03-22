@@ -69,6 +69,7 @@ const UserSchema = new mongoose.Schema({
     InstructorStatus:{
         type:String,
         enum:['none','active','pending'],
+        default:'none'
      
     },
    
