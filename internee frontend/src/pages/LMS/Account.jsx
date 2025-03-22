@@ -5,7 +5,7 @@ import { ClipLoader } from "react-spinners";
 import { toast } from "react-toastify";
 
 export const Account = () => {
-  const { user, url, jwtToken, setuser, isLoading, setisLoading } = usestore();
+  const { user, url, jwtToken, setUser, isLoading, setisLoading } = usestore();
 
   const [formdata, setformdata] = useState({
     email: "",
@@ -41,9 +41,10 @@ export const Account = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        setuser(data.updateddata);
+      
         if(data.SuccessMessage){
           toast.success(data.SuccessMessage)
+          setUser(data.updateddata);
         }
         if(data.FailureMessage){
           toast.error(data.FailureMessage)

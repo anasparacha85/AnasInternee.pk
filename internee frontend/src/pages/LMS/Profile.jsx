@@ -8,7 +8,7 @@ export const Profile = () => {
   
   const [bold, setBold] = useState(false);
   const [italic, setItalic] = useState(false);
-  const {user,url,jwtToken,setuser,isLoading,setisLoading}=usestore()
+  const {user,url,jwtToken,setUser,isLoading,setisLoading}=usestore()
   console.log(user.Age);
   
 
@@ -76,7 +76,7 @@ fetch(`${url}/api/user/UpdateUserProfile`,{
  if(data.SuccessMessage){
   toast.success(data.SuccessMessage
   )
-  setuser(data.finddata)
+  setUser(data.finddata)
  }
  if(data.FailureMessage){
   toast.error(data.FailureMessage)

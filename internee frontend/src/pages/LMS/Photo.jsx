@@ -8,7 +8,7 @@ export const Photo = () => {
   
   const [bold, setBold] = useState(false);
   const [italic, setItalic] = useState(false);
-  const {user,url,jwtToken,setuser,isLoading,setisLoading}=usestore()
+  const {user,url,jwtToken,setUser,isLoading,setisLoading}=usestore()
 
   
 
@@ -42,9 +42,10 @@ fetch(`${url}/api/user/UploadProfilePicture`,{
   return res.json()
 }).then((data)=>{
  console.log(data);
- setuser(data.finddata)
+ 
 if(data.SuccessMessage){
   toast.success(data.SuccessMessage)
+  setUser(data.finddata)
 }
 if(data.FailureMessage){
   toast.error(data.FailureMessage)
