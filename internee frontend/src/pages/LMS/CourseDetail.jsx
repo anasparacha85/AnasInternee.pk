@@ -11,11 +11,12 @@ import { ClipLoader } from "react-spinners";
 export const CourseDetail = () => {
   const { id } = useParams(); // Get course ID from URL params
   const [course, setCourse] = useState(null); // Default to null for loading state
-  const { url ,jwtToken,isLoggedIn,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen,isLoading,setisLoading} = usestore(); // Get base URL
+  const { url ,jwtToken,isLoggedIn,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen,isLoading,setisLoading,isFavorite,
+    setIsFavorite,} = usestore(); // Get base URL
   const [relatedCourses, setrelatedCourses] = useState([])
   const [videourl, setvideourl] = useState('')
   const [videopopupopen, setvideopopupopen] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(false);
+ 
 
   const getCourseById = () => {
     

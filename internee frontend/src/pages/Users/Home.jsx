@@ -53,7 +53,7 @@ export const UserHome = () => {
 </div>
       </div>
       {JobsCategories?<>
-        <div className='grid lg:grid-cols-3 grid-cols-1 px-20 gap-10 '>
+        <div className='grid lg:grid-cols-3 grid-cols-1 md:px-20 gap-10 '>
             {JobsCategories.map((value,index)=>(
                
                 

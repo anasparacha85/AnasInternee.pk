@@ -5,8 +5,9 @@ import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 
 const CourseCard = ({ image, title, description, price, id, rout, Label }) => {
-  const { url, jwtToken,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen } = usestore();
-  const [isFavorite, setIsFavorite] = useState(false);
+  const { url, jwtToken,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen ,isFavorite,
+    setIsFavorite,} = usestore();
+
 
   // ✅ Page load hone par localStorage se favorite status fetch karo
   useEffect(() => {

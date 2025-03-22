@@ -14,7 +14,7 @@ const ContactForm = () => {
   };
 
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen p-6 px-32 ">
+    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen p-6 md:px-32 ">
       {/* Left Side - Map */}
       <div className="w-full md:w-1/2 h-64 md:h-[440px]">
         <iframe
