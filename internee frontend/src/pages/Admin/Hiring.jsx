@@ -10,7 +10,7 @@ export const Hiring = () => {
   console.log('hello',jobbyquery);
   
   return (
-    <div className=" flex flex-col bg-white ">
+    <div className=" flex flex-col bg-white overflow-x-hidden">
     <Header/>
     <BackgroundSection h3={"Home>    "} pgname={'  Hiring'} h1={"Hiring"}/>
     <div className='w-full min-h-[250px] max-h-auto bg-white flex flex-col py-8'>

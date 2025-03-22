@@ -1,12 +1,26 @@
+import { useEffect, useRef } from "react";
 import { NavLink } from "react-router-dom";
-
+import Typed from "typed.js";
 const DreamSection = () => {
+   const el = useRef(null);
+  
+      useEffect(() => {
+        const typed = new Typed(el.current, {
+          strings: ['Gain Hands on Experience.', 'Learn New Skills','Master Modern IT Technology'],
+          typeSpeed: 50,
+        });
+    
+        return () => {
+          // Destroy Typed instance during cleanup to stop animation
+          typed.destroy();
+        };
+      },[]);
     return (
       <div className="flex flex-col md:flex-row items-center justify-between px-6 md:px-32 py-16 md:h-[500px]">
         {/* Left Side */}
         <div className="md:w-2/5 text-center md:text-left">
           <h2 className="text-5xl font-bold text-black">Looking for Dream Internship?</h2>
-          <h1 className="text-5xl font-bold text-green-600 mt-2">Grain hands on Experience</h1>
+          <span className="text-5xl font-bold text-green-600 mt-2" ref={el}/>
           <p className="text-gray-700 mt-4">
           Internee.pk kickstart student's tech careers with first internships, providing industry exposure, practical skills, and networking opportunities, paving the way for their success in the tech industry.
           </p>

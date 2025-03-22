@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import LMSHeader from '../../Components/LMSHeader'
 import { usestore } from "../../Store/ContextStore";
 import CourseCard from "../../Components/Cardss/CourseCard";
+import BlurText from "../../Animations/BlurText";
 
 
 const Home = () => {
@@ -27,9 +28,15 @@ const Home = () => {
     <div className="h-[600px] w-[100%] md:px-20  bg-blue-400 flex items-center md:justify-start "style={{ backgroundSize:'cover',objectFit:'fill',backgroundRepeat:'no-repeat', backgroundPosition: 'center',backgroundImage:`url("https://learn.internee.pk/uploads/system/home-banner.jpg")`} } >
     <div className="flex flex-col md:w-[40%] w-full ">
 <h1 className="text-3xl text-white font-bold"> Join Internee.pk now..!</h1>
-<p className="text-xl text-white ">
-The ultimate platform designed to turbocharge the IT sector in Pakistan! We recognize the immense potential of talented individuals in the country and aim to bridge the gap between them and the thriving IT industry. Internee.pk offers a comprehensive range of virtual internship opportunities exclusively in the IT field.
-</p>
+<BlurText
+  text="The ultimate platform designed to turbocharge the IT sector in Pakistan! We recognize the immense potential of talented individuals in the country and aim to bridge the gap between them and the thriving IT industry. Internee.pk offers a comprehensive range of virtual internship opportunities exclusively in the IT field."
+  delay={50}
+  animateBy="words"
+  direction="top"
+ 
+  className="text-xl text-white"
+/>
+
     </div>
     </div>
     <div className="container mx-auto p-6">

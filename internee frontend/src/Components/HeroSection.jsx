@@ -4,6 +4,7 @@ import Header from "./Header";
 import { usestore } from "../Store/ContextStore";
 import { useNavigate } from "react-router";
 import CountUp from "../Animations/countup";
+import SplitText from "../Animations/SplitText";
 // Hero Section Component
 export const HeroSection=()=> {
   const backgroundimage="https://skillhub-woad.vercel.app/assets/cloud-home-hero-C5Gbf_8a.webp"
@@ -35,7 +36,7 @@ navigate('/job-portal/hiring')
       })
     }
     return (
-      <section className="bg-green-500 text-white h-screen  p-16 lg:pl-60 text-center lg:text-start" style={{backgroundImage:`url( ${backgroundimage})`,backgroundSize: '50%', backgroundRepeat:'no-repeat' ,backgroundPosition:'right'}}>
+      <section className="bg-green-500 text-white h-screen  p-16 lg:pl-60 text-center lg:text-start bg-custom" style={{backgroundImage:`url( ${backgroundimage})`}}>
        
         <p className="text-lg mb-6">We have <span className="mx-1">
         <CountUp
@@ -47,9 +48,30 @@ navigate('/job-portal/hiring')
   className="count-up-text"
 />
           </span>   great job offers you deserve!</p>
+ 
 
-        <h1 className="lg:text-[55px] text-3xl font-bold mb-4">Your Dream Job </h1>
-        <h1 className="lg:text-[60px] text-3xl font-semibold mb-8">is Waiting</h1>
+        <h1 className="lg:text-[55px] text-3xl font-bold mb-4">  <SplitText
+  text="Your Dream Job"
+  className=""
+  delay={150}
+  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+  easing="easeOutCubic"
+  threshold={0.2}
+  rootMargin="-50px"
+ 
+/> </h1>
+        <h1 className="lg:text-[60px] text-3xl font-semibold mb-8"><SplitText
+  text="is Waiting"
+  className=""
+  delay={150}
+  animationFrom={{ opacity: 0, transform: 'translate3d(0,50px,0)' }}
+  animationTo={{ opacity: 1, transform: 'translate3d(0,0,0)' }}
+  easing="easeOutCubic"
+  threshold={0.2}
+  rootMargin="-50px"
+  
+/></h1>
         <span className="bg-white text-gray-800 mt-6 py-3 px-6 text-lg rounded-[5px] ">Find a Job </span>
         <form onSubmit={handlesubmit}>
 <div className="flex flex-col lg:flex-row gap-2.5 bg-white py-10 px-2 w-full lg:w-[70%] ">  

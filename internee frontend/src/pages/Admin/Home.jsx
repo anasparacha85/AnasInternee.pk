@@ -10,7 +10,7 @@ import Subscribe from '../../Components/Subscribe';
 import CountUp from '../../Animations/countup';
 const Home = () => {
   return (
-     <div className=" flex flex-col bg-White ">
+     <div className=" flex flex-col bg-White overflow-x-hidden ">
       
       <Header />
       <HeroSection/>

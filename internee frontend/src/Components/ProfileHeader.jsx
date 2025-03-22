@@ -45,7 +45,7 @@ const ProfileHeader = ({Heading}) => {
 
         {/* Mobile Links */}
         <nav className="flex flex-col space-y-4">
-          {["User Profile", "Favorites", "All Courses"].map((item, index) => (
+          {["User Profile", "my Favorites", "My Courses"].map((item, index) => (
             <NavLink
               key={index}
               to={`/LMS/${item.replace(" ","")}`}

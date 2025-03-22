@@ -145,6 +145,7 @@ const location=useLocation()
 
           {isLoggedIn ? (
             <>
+              <NavLink to='/LMS/Instructor' className="bg-gray-100 px-4 py-2 rounded-md cursor-pointer">Instructor</NavLink>
               <NavLink to="/LMS/MyCourses" className="block p-2 hover:bg-gray-700">My Courses</NavLink>
               <NavLink to="/LMS/myFavorites" className="block p-2 hover:bg-gray-700">Favorites</NavLink>
               <NavLink to="/LMS/UserProfile" className="block p-2 hover:bg-gray-700">User Profile</NavLink>

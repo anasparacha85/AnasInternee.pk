@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import UserHeader from '../../Components/UserHeader'
 import DreamSection from '../../Components/DreamSection'
 import { usestore } from '../../Store/ContextStore'
@@ -11,7 +11,11 @@ import Footer from '../../Components/Footer'
 import Aos from 'aos'
 import 'aos/dist/aos.css'
 import { ClipLoader } from 'react-spinners'
+import Typed from 'typed.js';
+
 export const UserHome = () => {
+    // Create reference to store the DOM element containing the animation
+   
   useEffect(()=>{
     Aos.init()
   },[])
