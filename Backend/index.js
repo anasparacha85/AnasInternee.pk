@@ -26,6 +26,7 @@ server.use('/api/jobs',JobRouter)
 server.use('/api/user',UserRouter)
 server.use('/api/admin',AdminRouter)
 server.use('/api/instructor',InstructorRouter)
+console.log(process.env.FRONT_END_URL);
 
 server.use(errormiddleware)
 
