@@ -3,7 +3,7 @@ import { useContext, createContext, useEffect, useState, useCallback } from "rea
 export const StoreContext = createContext();
 
 export const StoreContextProvider = ({ children }) => {
-  const url = "https://backend-silk-iota-33.vercel.app";
+  const url = "https://backend-2g0wab8jg-anasparacha85s-projects.vercel.app";
 
   const [AdminLoginOpen, setAdminLoginOpen] = useState(false);
   const [AdminSignupOpen, setAdminSignupOpen] = useState(false);
