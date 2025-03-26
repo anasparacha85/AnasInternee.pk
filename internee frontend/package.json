@@ -24,7 +24,8 @@
     "react-spinners": "^0.15.0",
     "react-toastify": "^11.0.5",
     "tailwindcss": "^4.0.6",
-    "typed.js": "^2.1.0"
+    "typed.js": "^2.1.0",
+    "vercel": "^41.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
