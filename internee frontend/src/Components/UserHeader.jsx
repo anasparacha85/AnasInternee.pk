@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { usestore } from '../Store/ContextStore';
 import ProfileOverlay from './OverLays/ProfileOverlay';
-
+import Skillternloog from '../../public/skillternloog.png'
 export const UserHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location=useLocation()
@@ -30,7 +30,7 @@ export const UserHeader = () => {
       <div className="max-w-6xl  mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="  text-xl">
-         <img src="https://www.internee.pk/logo.png" alt="" className='w-40' />
+          <img src={Skillternloog} alt="" className='w-40 h-20' style={{mixBlendMode:'multiply'}}/>
         </div>
 
         {/* Desktop Navigation Links */}

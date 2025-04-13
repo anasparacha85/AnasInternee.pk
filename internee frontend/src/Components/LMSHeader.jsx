@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 import { NavLink } from "react-router-dom";
 import ProfileOverlay from "./OverLays/ProfileOverlay";
 import CoursesOverLay from "./OverLays/CoursesOverLay";
+import Skillternloog from '../../public/skillternloog.png'
 
 const coursesData = {
   "Web Development": ["React.js", "Node.js", "MERN Stack", "Django", "PHP"],
@@ -47,7 +48,7 @@ const location=useLocation()
     <div className="container mx-auto flex justify-between items-center">
       {/* Logo */}
       <div className="  text-xl w-1/5">
-       <img src="https://www.internee.pk/logo.png" alt="" className='w-40' />
+        <img src={Skillternloog} alt="" className='w-40 h-20' style={{mixBlendMode:'color-burn'}}/>
       </div>
 
       {/* Desktop Menu */}

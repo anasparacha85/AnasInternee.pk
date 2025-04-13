@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { usestore } from '../Store/ContextStore';
 import AdminProfileOverlay from './OverLays/AdminProfileOverlay';
 
+import Skillternloog from '../../public/skillternloog.png'
+
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -26,7 +28,7 @@ else{
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="  text-xl">
-         <img src="https://www.internee.pk/logo.png" alt="" className='w-40' />
+         <img src={Skillternloog} alt="" className='w-40 h-20' style={{mixBlendMode:'color-burn'}}/>
         </div>
 
         {/* Desktop Navigation Links */}

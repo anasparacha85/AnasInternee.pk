@@ -22,7 +22,7 @@ const DreamSection = () => {
           <h2 className="text-5xl font-bold text-black">Looking for Dream Internship?</h2>
           <span className="text-5xl font-bold text-green-600 mt-2" ref={el}/>
           <p className="text-gray-700 mt-4">
-          Internee.pk kickstart student's tech careers with first internships, providing industry exposure, practical skills, and networking opportunities, paving the way for their success in the tech industry.
+          SKill Tern kickstart student's tech careers with first internships, providing industry exposure, practical skills, and networking opportunities, paving the way for their success in the tech industry.
           </p>
   
           {/* Icons Row */}

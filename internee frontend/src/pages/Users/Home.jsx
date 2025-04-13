@@ -46,7 +46,7 @@ export const UserHome = () => {
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8GQ1LVkaqnY-gzh-dECm3OBMbGX8l74Dfgg&s" alt="Icon 1" className=" w-20" />
         </div>
         <div className='w-full flex justify-center mb-6'>
-        <h1 className='font-bold text-5xl text-gray-900 text-center'>What is internee.pk?</h1>
+        <h1 className='font-bold text-5xl text-gray-900 text-center'>What is Skilltern?</h1>
         </div>
         <div className='w-full flex justify-center '>
         <p className='font-normal text-gray-600 text-lg w-[60%] text-center'>The ultimate platform designed to turbocharge the IT sector in Pakistan! We recognize the immense potential of talented individuals in the country and aim to bridge the gap between them and the thriving IT industry. Internee.pk offers a comprehensive range of virtual internship opportunities exclusively in the IT field.</p>

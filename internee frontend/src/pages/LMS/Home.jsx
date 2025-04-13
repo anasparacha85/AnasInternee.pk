@@ -27,7 +27,7 @@ const Home = () => {
     <LMSHeader/>
     <div className="h-[600px] w-[100%] md:px-20  bg-blue-400 flex items-center md:justify-start "style={{ backgroundSize:'cover',objectFit:'fill',backgroundRepeat:'no-repeat', backgroundPosition: 'center',backgroundImage:`url("https://learn.internee.pk/uploads/system/home-banner.jpg")`} } >
     <div className="flex flex-col md:w-[40%] w-full ">
-<h1 className="text-3xl text-white font-bold"> Join Internee.pk now..!</h1>
+<h1 className="text-3xl text-white font-bold"> Join SkillTern now..!</h1>
 <BlurText
   text="The ultimate platform designed to turbocharge the IT sector in Pakistan! We recognize the immense potential of talented individuals in the country and aim to bridge the gap between them and the thriving IT industry. Internee.pk offers a comprehensive range of virtual internship opportunities exclusively in the IT field."
   delay={50}
