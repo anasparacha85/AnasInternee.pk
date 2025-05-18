@@ -1,65 +1,55 @@
-import { StarIcon, HeartIcon } from "lucide-react";
 import { useEffect, useState } from "react";
 import { usestore } from "../../Store/ContextStore";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import { StarIcon, HeartIcon } from "lucide-react";
 
-const CourseCard = ({ image, title, description, price, id, rout, Label }) => {
-  const { url, jwtToken,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen ,isFavorite,
-    setIsFavorite,} = usestore();
+const CourseCard = ({ image, title, description, price, id ,rout,Label}) => {
+  const { url, jwtToken, setUserLoginOpen } = usestore();
+  const [isFavorite, setIsFavorite] = useState(false);
 
-
-  // ✅ Page load hone par localStorage se favorite status fetch karo
   useEffect(() => {
     const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
     setIsFavorite(storedFavorites.includes(id));
   }, [id]);
 
-  // ✅ Favorite toggle function
   const toggleFavourite = () => {
-    if(!jwtToken){
-      setUserLoginOpen(true)
+    if (!jwtToken) {
+      setUserLoginOpen(true);
       return;
-      
     }
-    let apiurl = "";
-    let options = {
+
+    const method = isFavorite ? "DELETE" : "POST";
+    const endpoint = isFavorite
+      ? `${url}/api/courses/removeFavorites/${id}`
+      : `${url}/api/courses/addFavorites/${id}`;
+
+    fetch(endpoint, {
+      method,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${jwtToken}`
       }
-    };
-
-    if (!isFavorite) {
-      apiurl = `${url}/api/courses/addFavorites/${id}`;
-      options.method = "POST";
-    } else {
-      apiurl = `${url}/api/courses/removeFavorites/${id}`;
-      options.method = "DELETE";
-    }
-
-    fetch(apiurl, options)
-      .then(response => response.json())
+    })
+      .then(res => res.json())
       .then(data => {
         if (data.SuccessMessage) {
           toast.success(data.SuccessMessage);
-          setIsFavorite(!isFavorite);
-
-          // ✅ Local storage update karo
-          let storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-          if (!isFavorite) {
-            storedFavorites.push(id);
+          const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+          let updatedFavorites;
+          if (isFavorite) {
+            updatedFavorites = storedFavorites.filter(courseId => courseId !== id);
           } else {
-            storedFavorites = storedFavorites.filter(courseId => courseId !== id);
+            updatedFavorites = [...storedFavorites, id];
           }
-          localStorage.setItem("favorites", JSON.stringify(storedFavorites));
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+          setIsFavorite(!isFavorite);
         } else if (data.FailureMessage) {
           toast.error(data.FailureMessage);
         }
       })
       .catch(error => console.log("Error:", error));
   };
-
   return (
     <div className="max-w-sm bg-white rounded-2xl shadow-lg overflow-hidden transform hover:scale-105 transition-all duration-300 relative">
       {/* Course Image */}

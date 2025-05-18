@@ -9,149 +9,99 @@ import LMSHeader from "../../Components/LMSHeader";
 import { ClipLoader } from "react-spinners";
 
 export const CourseDetail = () => {
-  const { id } = useParams(); // Get course ID from URL params
-  const [course, setCourse] = useState(null); // Default to null for loading state
-  const { url ,jwtToken,isLoggedIn,UserLoginOpen,UserSignupOpen,setUserSignupOpen,setUserLoginOpen,isLoading,setisLoading,isFavorite,
-    setIsFavorite,} = usestore(); // Get base URL
-  const [relatedCourses, setrelatedCourses] = useState([])
-  const [videourl, setvideourl] = useState('')
-  const [videopopupopen, setvideopopupopen] = useState(false)
- 
+  const { id } = useParams();
+  const [course, setCourse] = useState(null);
+  const {
+    url, jwtToken, isLoading, setisLoading,
+    setUserLoginOpen,
+  } = usestore();
 
-  const getCourseById = () => {
-    
-    fetch(`${url}/api/courses/course/${id}`)
-      .then((res) => res.json())
-      .then((data) => {
-        console.log("Fetched Course Data:", data);
-        setCourse(data.Course)
-        if(data.relatedcourses.length>0){
-        setrelatedCourses(data.relatedcourses)
-        }
-        else{
-          setRelatedCourses([])
-        }
-          // Set the first object from the array
-       
-      })
-      .catch((err) => {
-        console.error("Error fetching course:", err);
-        setCourse(null);
-      });
-  };
+  const [relatedCourses, setRelatedCourses] = useState([]);
+  const [videourl, setVideoUrl] = useState('');
+  const [videoPopupOpen, setVideoPopupOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
+    const getCourseById = async () => {
+      try {
+        const res = await fetch(`${url}/api/courses/course/${id}`);
+        const data = await res.json();
+        setCourse(data.Course);
+        setRelatedCourses(data.relatedcourses || []);
+      } catch (err) {
+        console.error("Error fetching course:", err);
+        setCourse(null);
+      }
+    };
     getCourseById();
+
+    // Check favorite status from localStorage
+    const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+    setIsFavorite(storedFavorites.includes(id));
   }, [id]);
-  useEffect(()=>{
-    console.log(relatedCourses);
-    
-  },[getCourseById])
-  const getenrolled=()=>{
-  if(!jwtToken){
-    setUserLoginOpen(true)
-    return;
-  }
-  setisLoading(true)
-    fetch(`${url}/api/courses/course/enroll/${id}`,{
-      method:'POST',
-      headers:{
-        'Content-Type':'application/json',
-        'Authorization':`Bearer ${jwtToken}`
-      }
-    }).then((res)=>{
-      return res.json()
-    }).then((data)=>{
-      console.log(data);
-      if(data.SuccessMessage){
-        toast.success(data.SuccessMessage)
-      }
-      if(data.FailureMessage){
-        toast.error(data.FailureMessage)
-      }
-      
-    }).catch((error)=>{
-      console.log(error);
-      toast.error(error.FailureMessage)
-      
-    }).finally(()=>{
-      setisLoading(false)
-    })
-  }
 
-  const AddtoFavorite=()=>{
-    if(!jwtToken){
-      setUserLoginOpen(true)
+  const getEnrolled = () => {
+    if (!jwtToken) {
+      setUserLoginOpen(true);
       return;
-      
     }
-    let apiurl = "";
-    let options = {
-      method : "POST",
+    setisLoading(true);
+    fetch(`${url}/api/courses/course/enroll/${id}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${jwtToken}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.SuccessMessage) toast.success(data.SuccessMessage);
+        if (data.FailureMessage) toast.error(data.FailureMessage);
+      })
+      .catch(error => {
+        console.log(error);
+        toast.error("Enrollment failed");
+      })
+      .finally(() => setisLoading(false));
+  };
+
+  const toggleFavorite = () => {
+    if (!jwtToken) {
+      setUserLoginOpen(true);
+      return;
+    }
+
+    const method = isFavorite ? "DELETE" : "POST";
+    const endpoint = isFavorite
+      ? `${url}/api/courses/removeFavorites/${id}`
+      : `${url}/api/courses/addFavorites/${id}`;
+
+    fetch(endpoint, {
+      method,
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${jwtToken}`
       }
-    };
-    apiurl = `${url}/api/courses/addFavorites/${id}`;
-   
-    fetch(apiurl, options)
-    .then(response => response.json())
-    .then(data => {
-      if (data.SuccessMessage) {
-        toast.success(data.SuccessMessage);
-        setIsFavorite(true);
-
-        // ✅ Local storage update karo
-        let storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        if (!isFavorite) {
-          storedFavorites.push(id);
-        } else {
-          storedFavorites = storedFavorites.filter(courseId => courseId !== id);
-        }
-        localStorage.setItem("favorites", JSON.stringify(storedFavorites));
-      } else if (data.FailureMessage) {
-        toast.error(data.FailureMessage);
-      }
     })
-    .catch(error => console.log("Error:", error))
-  
-};
-
-      
-  
-const RemoveFromFavorite=()=>{
-  let apiurl = "";
-    let options = {
-      method : "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${jwtToken}`
-      }
-    };
-    apiurl = `${url}/api/courses/removeFavorites/${id}`;
-   
-    fetch(apiurl, options)
-    .then(response => response.json())
-    .then(data => {
-      if (data.SuccessMessage) {
-        toast.success(data.SuccessMessage);
-        setIsFavorite(false);
-
-        // ✅ Local storage update karo
-        let storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
-        if (!isFavorite) {
-          storedFavorites.push(id);
-        } else {
-          storedFavorites = storedFavorites.filter(courseId => courseId !== id);
+      .then(res => res.json())
+      .then(data => {
+        if (data.SuccessMessage) {
+          toast.success(data.SuccessMessage);
+          const storedFavorites = JSON.parse(localStorage.getItem("favorites")) || [];
+          let updatedFavorites;
+          if (isFavorite) {
+            updatedFavorites = storedFavorites.filter(courseId => courseId !== id);
+          } else {
+            updatedFavorites = [...storedFavorites, id];
+          }
+          localStorage.setItem("favorites", JSON.stringify(updatedFavorites));
+          setIsFavorite(!isFavorite);
+        } else if (data.FailureMessage) {
+          toast.error(data.FailureMessage);
         }
-        localStorage.setItem("favorites", JSON.stringify(storedFavorites));
-      } else if (data.FailureMessage) {
-        toast.error(data.FailureMessage);
-      }
-    })
-    .catch(error => console.log("Error:", error))
-};
+      })
+      .catch(error => console.log("Error:", error));
+  };
 
       
 
@@ -207,17 +157,14 @@ const RemoveFromFavorite=()=>{
       {/* Free Section */}
       <h3 className="text-xl font-bold mb-4 text-green-700">Free</h3>
       <div className="flex flex-col gap-3 sm:space-x-4 space-y-4 sm:space-y-0">
-        {isFavorite?
-          <button onClick={RemoveFromFavorite} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-         Remove From Favorite
-        </button> :
-       <button onClick={AddtoFavorite} className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
-    Add to Favorite
-     </button>
-     
-      }
+      <button
+              onClick={toggleFavorite}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600 transition duration-300"
+            >
+              {isFavorite ? "Remove from Favorite" : "Add to Favorite"}
+            </button>
        
-        <button onClick={getenrolled} className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300">
+        <button onClick={getEnrolled} className="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition duration-300">
         {isLoading?<ClipLoader size={25} color="white" loading={isLoading}/>:"Get Enrolled"}   
         </button>
       </div>
@@ -236,8 +183,13 @@ const RemoveFromFavorite=()=>{
 
     
     </div>
-    <RelatedCourses courses={relatedCourses}/>
-    <VideoOverLay isopen={videopopupopen} closeModal={() => setvideopopupopen(false)} videourl={videourl}/>
+   
+      <RelatedCourses courses={relatedCourses} />
+      <VideoOverLay
+        isopen={videoPopupOpen}
+        closeModal={() => setVideoPopupOpen(false)}
+        videourl={videourl}
+      />
 
     </div>
   );

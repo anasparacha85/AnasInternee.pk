@@ -25,7 +25,7 @@ const Home = () => {
   return (
     <>
     <LMSHeader/>
-    <div className="h-[600px] w-[100%] md:px-20  bg-blue-400 flex items-center md:justify-start "style={{ backgroundSize:'cover',objectFit:'fill',backgroundRepeat:'no-repeat', backgroundPosition: 'center',backgroundImage:`url("https://learn.internee.pk/uploads/system/home-banner.jpg")`} } >
+    <div className="h-[600px] w-[100%] md:px-20  bg-blue-400 flex items-center md:justify-start "style={{ backgroundSize:'cover',objectFit:'fill',backgroundRepeat:'no-repeat', backgroundPosition: 'center',backgroundImage:`url("https://images.pexels.com/photos/1933900/pexels-photo-1933900.jpeg?auto=compress&cs=tinysrgb&w=600")`} } >
     <div className="flex flex-col md:w-[40%] w-full ">
 <h1 className="text-3xl text-white font-bold"> Join SkillTern now..!</h1>
 <BlurText
