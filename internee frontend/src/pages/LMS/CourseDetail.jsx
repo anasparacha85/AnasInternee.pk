@@ -17,8 +17,8 @@ export const CourseDetail = () => {
   } = usestore();
 
   const [relatedCourses, setRelatedCourses] = useState([]);
-  const [videourl, setVideoUrl] = useState('');
-  const [videoPopupOpen, setVideoPopupOpen] = useState(false);
+  const [videourl, setvideourl] = useState('');
+  const [videoPopupOpen, setvideopopupopen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
@@ -187,7 +187,7 @@ export const CourseDetail = () => {
       <RelatedCourses courses={relatedCourses} />
       <VideoOverLay
         isopen={videoPopupOpen}
-        closeModal={() => setVideoPopupOpen(false)}
+        closeModal={() => setvideopopupopen(false)}
         videourl={videourl}
       />
 
